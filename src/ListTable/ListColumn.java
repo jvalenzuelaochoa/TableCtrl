@@ -2,10 +2,23 @@ package ListTable;
 
 import UsrCtrl.User;
 
+import java.util.HashMap;
+
 public class ListColumn {
 
     private User usr;
-    private ListColumn nextById, nextByName, nextBySalary;
+    //TODO: consider adding previous.
+    HashMap<User.userAttributes, ListColumn> next;
+
+    public ListColumn()
+    {
+        usr = null;
+        next = new HashMap<User.userAttributes, ListColumn>();
+        for(User.userAttributes att: User.userAttributes.values())
+        {
+            next.put(att, null);
+        }
+    }
 
     public void setUsr(User usr) {
         this.usr = usr;
@@ -15,27 +28,12 @@ public class ListColumn {
         return usr;
     }
 
-    public ListColumn getNextById() {
-        return nextById;
+    public ListColumn getNext(User.userAttributes att) {
+        return next.get(att);
     }
 
-    public ListColumn getNextByName() {
-        return nextByName;
-    }
-
-    public ListColumn getNextBySalary() {
-        return nextBySalary;
-    }
-
-    public void setNextById(ListColumn nextById) {
-        this.nextById = nextById;
-    }
-
-    public void setNextByName(ListColumn nextByName) {
-        this.nextByName = nextByName;
-    }
-
-    public void setNextBySalary(ListColumn nextBySalary) {
-        this.nextBySalary = nextBySalary;
+    public void setNext(User.userAttributes att, ListColumn nextColumn)
+    {
+        this.next.replace(att, nextColumn);
     }
 }

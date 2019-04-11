@@ -105,6 +105,11 @@ public class User {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return "ID: " + id.toString() + "; NAME: " + name + "; SALARY: " + salary.toString();
+    }
+
     public boolean equals(Object o) {
 
         if (o == this) return true;

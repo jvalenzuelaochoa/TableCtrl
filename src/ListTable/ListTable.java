@@ -1,64 +1,98 @@
 package ListTable;
 
+import UsrCtrl.User;
+import org.junit.Test;
+
+import java.util.HashMap;
+
 public class ListTable {
-    private ListColumn headById, headByName, headBySalary;
-    private ListColumn tailById, tailByName, tailBySalary;
+    private HashMap<User.userAttributes, ListColumn> head;
+    private HashMap<User.userAttributes, ListColumn> tail;
 
     public ListTable()
     {
-      headById = null;
-      headByName = null;
-      headBySalary = null;
-      tailById = null;
-      tailByName = null;
-      tailBySalary = null;
+        head = new HashMap<User.userAttributes, ListColumn>();
+        tail = new HashMap<User.userAttributes, ListColumn>();
+
+        for(User.userAttributes att: User.userAttributes.values())
+        {
+            head.put(att, null);
+            tail.put(att, null);
+        }
     }
 
-    public ListColumn getHeadById() {
-        return headById;
+    //TODO: add error checking for non-existing attributes.
+    public ListColumn getHead(User.userAttributes att)
+    {
+        return head.get(att);
     }
 
-    public void setHeadById(ListColumn headById) {
-        this.headById = headById;
+    public void setHead(User.userAttributes att, ListColumn newHead)
+    {
+        this.head.replace(att, newHead);
     }
 
-    public ListColumn getHeadByName() {
-        return headByName;
+    public ListColumn getTail(User.userAttributes att)
+    {
+        return tail.get(att);
     }
 
-    public void setHeadByName(ListColumn headByName) {
-        this.headByName = headByName;
+    public void setTailById(User.userAttributes att, ListColumn newTail)
+    {
+        this.tail.replace(att, newTail);
     }
 
-    public ListColumn getHeadBySalary() {
-        return headBySalary;
+    //TODO:experiment with different insertion methods
+    public void addUser(User newUser)
+    {
+        //TODO: validate user input
+        ListColumn newColumn = new ListColumn();
+        newColumn.setUsr(newUser);
+
+        if (head.get(User.userAttributes.ID)==null)
+        {
+            for(User.userAttributes att: User.userAttributes.values())
+            {
+                head.replace(att, newColumn);
+                tail.replace(att, newColumn);
+            }
+        }
+        else
+        {
+            for(User.userAttributes att: User.userAttributes.values())
+            {
+                tail.get(att).setNext(att,newColumn);
+                tail.replace(att, newColumn);
+            }
+        }
+
     }
 
-    public void setHeadBySalary(ListColumn headBySalary) {
-        this.headBySalary = headBySalary;
+    //TODO:add Remove method
+
+
+    public void displayByAttribute(User.userAttributes att)
+    {
+        ListColumn traverser = head.get(att);
+        while (traverser != null)
+        {
+            System.out.println(traverser.getUsr().toString());
+            System.out.println("|");
+            traverser = traverser.getNext(att);
+        }
+        System.out.println("null");
     }
 
-    public ListColumn getTailById() {
-        return tailById;
+    @Test
+    public void quicktest()
+    {
+        ListTable sampleTbl = new ListTable();
+        sampleTbl.displayByAttribute(User.userAttributes.ID);
+        User sampleUsr = new User(1, "Javier", 3500);
+        sampleTbl.addUser(sampleUsr);
+        sampleTbl.displayByAttribute(User.userAttributes.ID);
     }
 
-    public void setTailById(ListColumn tailById) {
-        this.tailById = tailById;
-    }
+    //TODO: Implement test to populate list from file.
 
-    public ListColumn getTailByName() {
-        return tailByName;
-    }
-
-    public void setTailByName(ListColumn tailByName) {
-        this.tailByName = tailByName;
-    }
-
-    public ListColumn getTailBySalary() {
-        return tailBySalary;
-    }
-
-    public void setTailBySalary(ListColumn tailBySalary) {
-        this.tailBySalary = tailBySalary;
-    }
 }
