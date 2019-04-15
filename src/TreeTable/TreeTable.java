@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 public class TreeTable {
 
+    //TODO: Implement balancing method.
+
     private HashMap<User.userAttributes, TreeColumn> root;
 
     public TreeTable()
