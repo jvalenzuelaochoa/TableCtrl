@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ListTable {
-    private HashMap<User.userAttributes, ListColumn> head;
-    private HashMap<User.userAttributes, ListColumn> tail;
+    HashMap<User.userAttributes, ListColumn> head;
+    HashMap<User.userAttributes, ListColumn> tail;
 
     public ListTable()
     {

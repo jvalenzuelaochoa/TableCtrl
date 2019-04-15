@@ -122,6 +122,50 @@ public class User {
                 id.equals(user.id);
     }
 
+    public boolean attributeIsSame(User usr2, userAttributes att)
+    {
+        switch (att)
+        {
+            case ID:
+                return this.getId().equals(usr2.getId());
+            case NAME:
+                return this.getName().equals(usr2.getName());
+            case SALARY:
+                return this.getSalary().equals(usr2.getSalary());
+            default: throw new IllegalArgumentException("unsupported attribute");
+        }
+    }
+
+    public boolean attributeIsGreater(User usr2, userAttributes att)
+    {
+        switch (att)
+        {
+            case ID:
+                return this.getId().compareTo(usr2.getId()) > 0;
+            case NAME:
+                return this.getName().compareToIgnoreCase(usr2.getName()) > 0;
+            case SALARY:
+                return this.getSalary().compareTo(usr2.getSalary()) > 0;
+            default: throw new IllegalArgumentException("unsupported attribute");
+        }
+
+    }
+
+    public boolean attributeIsLess(User usr2, userAttributes att)
+    {
+        switch (att)
+        {
+            case ID:
+                return this.getId().compareTo(usr2.getId()) < 0;
+            case NAME:
+                return this.getName().compareToIgnoreCase(usr2.getName()) < 0;
+            case SALARY:
+                return this.getSalary().compareTo(usr2.getSalary()) < 0;
+            default: throw new IllegalArgumentException("unsupported attribute");
+        }
+
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(name, id, salary);
