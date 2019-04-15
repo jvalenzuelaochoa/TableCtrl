@@ -122,7 +122,7 @@ public class User {
                 id.equals(user.id);
     }
 
-    public boolean attributeIsSame(User usr2, userAttributes att)
+    public boolean attributeIsSame(userAttributes att, User usr2)
     {
         switch (att)
         {
@@ -136,7 +136,7 @@ public class User {
         }
     }
 
-    public boolean attributeIsGreater(User usr2, userAttributes att)
+    public boolean attributeIsGreater(userAttributes att, User usr2)
     {
         switch (att)
         {
@@ -151,7 +151,7 @@ public class User {
 
     }
 
-    public boolean attributeIsLess(User usr2, userAttributes att)
+    public boolean attributeIsLess(userAttributes att, User usr2)
     {
         switch (att)
         {

@@ -67,6 +67,7 @@ public class ListTable {
             for(User.userAttributes att: User.userAttributes.values())
             {
                 tail.get(att).setNext(att,newColumn);
+                newColumn.setPrevious(att, tail.get(att));
                 tail.replace(att, newColumn);
             }
         }
@@ -79,23 +80,41 @@ public class ListTable {
     public void displayByAttribute(User.userAttributes att)
     {
         ListColumn traverser = head.get(att);
+        int noOfUsers = 0;
         while (traverser != null)
         {
             System.out.println(traverser.getUsr().toString());
             System.out.println("|");
             traverser = traverser.getNext(att);
+            noOfUsers++;
         }
         System.out.println("null");
+        System.out.println("\nTotal Number of Users: " + Integer.toString(noOfUsers)+"\n\n");
     }
 
     @Test
-    public void quicktest()
+    public void quickTest()
     {
         ListTable sampleTbl = new ListTable();
         sampleTbl.displayByAttribute(User.userAttributes.ID);
         User sampleUsr = new User(1, "Javier", 3500);
         sampleTbl.addUser(sampleUsr);
         sampleTbl.displayByAttribute(User.userAttributes.ID);
+    }
+    @Test
+    public void notSoQuickTest()
+    {
+        ListTable sampleTbl = new ListTable();
+        sampleTbl.displayByAttribute(User.userAttributes.ID);
+        sampleTbl.addUser( new User(1, "Jesus", 3500));
+        sampleTbl.addUser( new User(2, "Pedro", 3500));
+        sampleTbl.addUser( new User(6, "Ochoa", 3500));
+        sampleTbl.addUser( new User(5, "Valenzuela", 3500));
+        sampleTbl.addUser( new User(3, "Mentira", 3500));
+        sampleTbl.addUser( new User(4, "Javier", 3500));
+        sampleTbl.displayByAttribute(User.userAttributes.ID);
+        sampleTbl.displayByAttribute(User.userAttributes.NAME);
+        sampleTbl.displayByAttribute(User.userAttributes.SALARY);
     }
 
     //TODO: Implement test to populate list from file.
