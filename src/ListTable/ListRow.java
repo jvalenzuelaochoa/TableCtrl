@@ -4,18 +4,18 @@ import UsrCtrl.User;
 
 import java.util.HashMap;
 
-public class ListColumn {
+public class ListRow {
 
     private User usr;
     //TODO: consider adding previous.
-    HashMap<User.userAttributes, ListColumn> next;
-    HashMap<User.userAttributes, ListColumn> previous;
+    HashMap<User.userAttributes, ListRow> next;
+    HashMap<User.userAttributes, ListRow> previous;
 
-    public ListColumn()
+    public ListRow()
     {
         usr = null;
-        next = new HashMap<User.userAttributes, ListColumn>();
-        previous = new HashMap<User.userAttributes, ListColumn>();
+        next = new HashMap<User.userAttributes, ListRow>();
+        previous = new HashMap<User.userAttributes, ListRow>();
         for(User.userAttributes att: User.userAttributes.values())
         {
             next.put(att, null);
@@ -31,22 +31,22 @@ public class ListColumn {
         return usr;
     }
 
-    public ListColumn getNext(User.userAttributes att)
+    public ListRow getNext(User.userAttributes att)
     {
         return next.get(att);
     }
 
-    public ListColumn getPrevious(User.userAttributes att)
+    public ListRow getPrevious(User.userAttributes att)
     {
         return previous.get(att);
     }
 
-    public void setPrevious(User.userAttributes att, ListColumn prevColumn)
+    public void setPrevious(User.userAttributes att, ListRow prevColumn)
     {
         this.previous.replace(att, prevColumn);
     }
 
-    public void setNext(User.userAttributes att, ListColumn nextColumn)
+    public void setNext(User.userAttributes att, ListRow nextColumn)
     {
         this.next.replace(att, nextColumn);
     }

@@ -3,8 +3,6 @@ package ListTable;
 import UsrCtrl.User;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 public class SortedListTable extends ListTable {
 
     public SortedListTable()
@@ -15,7 +13,7 @@ public class SortedListTable extends ListTable {
     public void addUser(User newUser)
     {
         //TODO: validate user input
-        ListColumn newColumn = new ListColumn();
+        ListRow newColumn = new ListRow();
         newColumn.setUsr(newUser);
 
         if (head.get(User.userAttributes.ID)==null)
@@ -30,7 +28,7 @@ public class SortedListTable extends ListTable {
         {
             for(User.userAttributes att: User.userAttributes.values())
             {
-                ListColumn traverser = head.get(att);
+                ListRow traverser = head.get(att);
                 while (traverser != null)
                 {
                     if(traverser.getUsr().attributeIsGreater(att, newUser))

@@ -3,47 +3,46 @@ package TreeTable;
 import UsrCtrl.User;
 import org.junit.Test;
 
-import javax.swing.event.TreeWillExpandListener;
 import java.util.HashMap;
 
 public class TreeTable {
 
     //TODO: Implement balancing method.
 
-    private HashMap<User.userAttributes, TreeColumn> root;
+    private HashMap<User.userAttributes, TreeRow> root;
 
     public TreeTable()
     {
-        root = new HashMap<User.userAttributes, TreeColumn>();
+        root = new HashMap<User.userAttributes, TreeRow>();
         for(User.userAttributes att: User.userAttributes.values())
         {
             root.put(att, null);
         }
     }
 
-    public TreeColumn getRoot(User.userAttributes att)
+    public TreeRow getRoot(User.userAttributes att)
     {
         return root.get(att);
     }
 
-    public void setRoot(User.userAttributes att, TreeColumn root) {
+    public void setRoot(User.userAttributes att, TreeRow root) {
         this.root.replace(att,root);
     }
 
     public void addUser(User newUser)
     {
-        TreeColumn newColumn = new TreeColumn(newUser);
+        TreeRow newRow = new TreeRow(newUser);
 
         for(User.userAttributes att: User.userAttributes.values())
         {
             if (root.get(att) == null)
             {
-                root.replace(att, newColumn);
+                root.replace(att, newRow);
             }
             else
             {
-                TreeColumn traverser = root.get(att);
-                TreeColumn parent = null;
+                TreeRow traverser = root.get(att);
+                TreeRow parent = null;
                 boolean newLocationIsLeft = false;
                 while(traverser != null)
                 {
@@ -60,14 +59,14 @@ public class TreeTable {
                         newLocationIsLeft = false;
                     }
                 }
-                newColumn.setParent(att, parent);
+                newRow.setParent(att, parent);
                 if(newLocationIsLeft)
                 {
-                    parent.setLeft(att,newColumn);
+                    parent.setLeft(att,newRow);
                 }
                 else
                     {
-                        parent.setRight(att, newColumn);
+                        parent.setRight(att, newRow);
                     }
 
             }
@@ -81,7 +80,7 @@ public class TreeTable {
         System.out.println("\n");
     }
 
-    private void print(String prefix, boolean isTail, User.userAttributes att, TreeColumn traverser) {
+    private void print(String prefix, boolean isTail, User.userAttributes att, TreeRow traverser) {
         System.out.println(prefix + (isTail ? "└── " : "├── ") + traverser.getUsr().toString());
         if (traverser.getLeft(att) != null)
         {

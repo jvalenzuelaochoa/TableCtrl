@@ -11,13 +11,13 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ListTable {
-    HashMap<User.userAttributes, ListColumn> head;
-    HashMap<User.userAttributes, ListColumn> tail;
+    HashMap<User.userAttributes, ListRow> head;
+    HashMap<User.userAttributes, ListRow> tail;
 
     public ListTable()
     {
-        head = new HashMap<User.userAttributes, ListColumn>();
-        tail = new HashMap<User.userAttributes, ListColumn>();
+        head = new HashMap<User.userAttributes, ListRow>();
+        tail = new HashMap<User.userAttributes, ListRow>();
 
         for(User.userAttributes att: User.userAttributes.values())
         {
@@ -27,22 +27,22 @@ public class ListTable {
     }
 
     //TODO: add error checking for non-existing attributes.
-    public ListColumn getHead(User.userAttributes att)
+    public ListRow getHead(User.userAttributes att)
     {
         return head.get(att);
     }
 
-    public void setHead(User.userAttributes att, ListColumn newHead)
+    public void setHead(User.userAttributes att, ListRow newHead)
     {
         this.head.replace(att, newHead);
     }
 
-    public ListColumn getTail(User.userAttributes att)
+    public ListRow getTail(User.userAttributes att)
     {
         return tail.get(att);
     }
 
-    public void setTailById(User.userAttributes att, ListColumn newTail)
+    public void setTailById(User.userAttributes att, ListRow newTail)
     {
         this.tail.replace(att, newTail);
     }
@@ -51,24 +51,24 @@ public class ListTable {
     public void addUser(User newUser)
     {
         //TODO: validate user input
-        ListColumn newColumn = new ListColumn();
-        newColumn.setUsr(newUser);
+        ListRow newRow = new ListRow();
+        newRow.setUsr(newUser);
 
         if (head.get(User.userAttributes.ID)==null)
         {
             for(User.userAttributes att: User.userAttributes.values())
             {
-                head.replace(att, newColumn);
-                tail.replace(att, newColumn);
+                head.replace(att, newRow);
+                tail.replace(att, newRow);
             }
         }
         else
         {
             for(User.userAttributes att: User.userAttributes.values())
             {
-                tail.get(att).setNext(att,newColumn);
-                newColumn.setPrevious(att, tail.get(att));
-                tail.replace(att, newColumn);
+                tail.get(att).setNext(att,newRow);
+                newRow.setPrevious(att, tail.get(att));
+                tail.replace(att, newRow);
             }
         }
 
@@ -79,7 +79,7 @@ public class ListTable {
 
     public void displayByAttribute(User.userAttributes att)
     {
-        ListColumn traverser = head.get(att);
+        ListRow traverser = head.get(att);
         int noOfUsers = 0;
         while (traverser != null)
         {
