@@ -8,7 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ListTable {
     HashMap<User.userAttributes, ListRow> head;
@@ -72,6 +74,18 @@ public class ListTable {
             }
         }
 
+    }
+
+    ArrayList<User> query(String queryStr)
+    {
+        ArrayList<User> results= new ArrayList<User>();
+
+        String[] queryProps = queryStr.split(" ");
+        String att = queryProps[0];
+        String operand = queryProps[1];
+        String parame = queryProps[2];
+
+        return results;
     }
 
     //TODO:add Remove method
