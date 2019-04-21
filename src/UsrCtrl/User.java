@@ -9,6 +9,17 @@ public class User {
         ID, NAME, SALARY;
     }
 
+    public static userAttributes toAttribute(String attStr)
+    {
+        switch(attStr)
+        {
+            case "ID": return userAttributes.ID;
+            case "NAME" : return userAttributes.NAME;
+            case "SALARY" : return userAttributes.SALARY;
+            default : throw new IllegalArgumentException("not a supported attribute to convert");
+        }
+    }
+
     private Integer id;
     private String name;
     private Integer salary;
@@ -21,7 +32,7 @@ public class User {
 
     }
 
-    public Object GetElement(userAttributes elementName)
+    public Object getElement(userAttributes elementName)
     {
         switch (elementName)
         {

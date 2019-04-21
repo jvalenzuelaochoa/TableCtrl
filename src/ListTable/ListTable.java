@@ -76,14 +76,67 @@ public class ListTable {
 
     }
 
-    ArrayList<User> query(String queryStr)
+    public ArrayList<User> query(String queryStr)
     {
         ArrayList<User> results= new ArrayList<User>();
 
         String[] queryProps = queryStr.split(" ");
-        String att = queryProps[0];
+        String attribute = queryProps[0];
         String operand = queryProps[1];
-        String parame = queryProps[2];
+
+        User.userAttributes att = User.toAttribute(attribute);
+
+        ListRow traverser = head.get(att);
+
+        Object params;
+
+        if (att == User.userAttributes.NAME)
+        {
+            params = (String)queryProps[2];
+        }
+        else
+        {
+            params = Integer.parseInt(queryProps[2]);
+        }
+
+        while (traverser != null)
+        {
+            int comparator;
+            if ((att == User.userAttributes.NAME))
+            {
+               comparator =  ((String)traverser.getUsr().getElement(att)).compareToIgnoreCase((String) params);
+            }
+            else
+            {
+                comparator = ((Integer)traverser.getUsr().getElement(att)).compareTo((Integer) params);
+            }
+            if (operand.contains("="))
+            {
+                if (comparator == 0)
+                {
+                    results.add(traverser.getUsr());
+                }
+            }
+
+            if (operand.contains(">"))
+            {
+                if (comparator > 0)
+                {
+                    results.add(traverser.getUsr());
+                }
+            }
+
+            if (operand.contains("<"))
+            {
+                if (comparator < 0 )
+                {
+                    results.add(traverser.getUsr());
+                }
+            }
+
+            traverser = traverser.getNext(att);
+        }
+
 
         return results;
     }
@@ -121,14 +174,40 @@ public class ListTable {
         ListTable sampleTbl = new ListTable();
         sampleTbl.displayByAttribute(User.userAttributes.ID);
         sampleTbl.addUser( new User(1, "Jesus", 3500));
-        sampleTbl.addUser( new User(2, "Pedro", 3500));
-        sampleTbl.addUser( new User(6, "Ochoa", 3500));
-        sampleTbl.addUser( new User(5, "Valenzuela", 3500));
-        sampleTbl.addUser( new User(3, "Mentira", 3500));
-        sampleTbl.addUser( new User(4, "Javier", 3500));
+        sampleTbl.addUser( new User(2, "Pedro", 200));
+        sampleTbl.addUser( new User(6, "Ochoa", 1000));
+        sampleTbl.addUser( new User(5, "Valenzuela", 10000));
+        sampleTbl.addUser( new User(3, "Mentira", 7));
+        sampleTbl.addUser( new User(4, "Javier", 750));
         sampleTbl.displayByAttribute(User.userAttributes.ID);
         sampleTbl.displayByAttribute(User.userAttributes.NAME);
         sampleTbl.displayByAttribute(User.userAttributes.SALARY);
+
+        ArrayList<User> queryResults = sampleTbl.query("SALARY = 3500");
+
+        for(User usr : queryResults)
+        {
+            System.out.println(usr);
+        }
+
+        System.out.println();
+
+        queryResults = sampleTbl.query("SALARY < 3500");
+
+        for(User usr : queryResults)
+        {
+            System.out.println(usr);
+        }
+
+        System.out.println();
+
+        queryResults = sampleTbl.query("SALARY > 3500");
+
+        for(User usr : queryResults)
+        {
+            System.out.println(usr);
+        }
+
     }
 
     //TODO: Implement test to populate list from file.
